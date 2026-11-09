@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'read.css' %}">
+</head>
+<body>
+    <div class="content">
+        {% for order in orders %}
+        <div class="card">
+            <p>заказ номер {{order.id}}</p>
+            <p>{{order.user_name}}</p>
+            <p>{{order.table.id}}</p>
+            <p>{% for d in order.dish.all %}{{ d.id }} {% endfor %}</p>
+            <p>{{order.status}}</p>
+        </div>
+        {% empty %}
+        <h1>пока здесь пусто</h1>
+        <button><a href="{% url 'home' %}">домой</a></button>
+        {% endfor %}
+    </div>
+</body>
+</html>

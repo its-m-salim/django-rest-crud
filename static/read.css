@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+}
+
+.content{
+
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20vh auto;
+    
+
+}
+body{
+
+    background-color: beige;
+}
+
+.card{
+    width: 280px;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid rgb(203, 201, 201);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    font-size: 18px;
+}
