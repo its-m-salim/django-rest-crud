@@ -1,26 +1,50 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Официант</title>
     <link rel="stylesheet" href="{% static 'read.css' %}">
 </head>
 <body>
-    <div class="content">
-        {% for order in orders %}
-        <div class="card">
-            <p>заказ номер {{order.id}}</p>
-            <p>{{order.user_name}}</p>
-            <p>{{order.table.id}}</p>
-            <p>{% for d in order.dish.all %}{{ d.id }} {% endfor %}</p>
-            <p>{{order.status}}</p>
+    <div class="topbar">
+        <a class="logo" href="{% url 'home' %}">Официант</a>
+        <div class="links">
+            <a href="{% url 'table' %}">Столы</a>
+            <a class="active" href="{% url 'read' %}">Заказы</a>
         </div>
-        {% empty %}
-        <h1>пока здесь пусто</h1>
-        <button><a href="{% url 'home' %}">домой</a></button>
-        {% endfor %}
+    </div>
+
+    <div class="content">
+        <div class="page-title">
+            <h1>Все заказы</h1>
+            <p>Заказов: {{ count }}</p>
+        </div>
+
+        <div class="orders">
+            {% for order in orders %}
+            <div class="card">
+                <div class="card-top">
+                    <div class="card-title">Заказ №{{ order.id }}</div>
+                    <div class="tag">{{ order.get_status_display }}</div>
+                </div>
+                <div class="card-name">{{ order.user_name }}</div>
+                <div class="card-info">Стол {{ order.table.number }}</div>
+                <div class="card-info">{{ order.dish.name }} — {{ order.dish.price }}</div>
+                <div class="card-date">{{ order.created_at|date:"d.m.Y H:i" }}</div>
+                <div class="card-buttons">
+                    <a class="btn" href="{% url 'update' order.id %}">Изменить</a>
+                    <a class="btn btn-danger" href="{% url 'delete' order.id %}">Удалить</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty">
+                <p>Пока здесь пусто</p>
+                <a class="btn btn-main" href="{% url 'table' %}">Новый заказ</a>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>

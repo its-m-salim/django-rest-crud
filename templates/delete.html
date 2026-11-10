@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Официант</title>
+    <link rel="stylesheet" href="{% static 'delete.css' %}">
+</head>
+<body>
+    <div class="topbar">
+        <a class="logo" href="{% url 'home' %}">Официант</a>
+        <div class="links">
+            <a href="{% url 'table' %}">Столы</a>
+            <a class="active" href="{% url 'read' %}">Заказы</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Удалить заказ?</h1>
+        <div class="order-title">Заказ №{{ order.id }}, {{ order.user_name }}</div>
+        <p>Это действие нельзя отменить</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="buttons">
+                <button class="btn btn-danger" type="submit">Да, удалить</button>
+                <a class="btn-ghost" href="{% url 'read' %}">Отмена</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

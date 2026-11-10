@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Официант</title>
+    <link rel="stylesheet" href="{% static 'update.css' %}">
+</head>
+<body>
+    <div class="topbar">
+        <a class="logo" href="{% url 'home' %}">Официант</a>
+        <div class="links">
+            <a href="{% url 'table' %}">Столы</a>
+            <a class="active" href="{% url 'read' %}">Заказы</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Изменить заказ №{{ order.id }}</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="name">Имя гостя</label>
+                <input type="text" name="name" id="name" value="{{ order.user_name }}" required>
+            </div>
+            <div class="field">
+                <label for="dish-select">Блюдо</label>
+                <select name="dish" id="dish-select">
+                    {% for dish in dishes %}
+                    <option value="{{ dish.id }}" {% if dish.id == order.dish_id %}selected{% endif %}>{{ dish.name }} — {{ dish.price }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="field">
+                <label for="table-select">Стол</label>
+                <select name="table" id="table-select">
+                    {% for table in tables %}
+                    <option value="{{ table.id }}" {% if table.id == order.table_id %}selected{% endif %}>Стол {{ table.number }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="field">
+                <label for="status-select">Статус</label>
+                <select name="status" id="status-select">
+                    {% for value, label in statuses %}
+                    <option value="{{ value }}" {% if value == order.status %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="buttons">
+                <button class="btn btn-main" type="submit">Сохранить</button>
+                <a class="btn-ghost" href="{% url 'read' %}">Отмена</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

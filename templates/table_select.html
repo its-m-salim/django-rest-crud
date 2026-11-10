@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Официант</title>
+    <link rel="stylesheet" href="{% static 'table_select.css' %}">
+</head>
+<body>
+    <div class="topbar">
+        <a class="logo" href="{% url 'home' %}">Официант</a>
+        <div class="links">
+            <a class="active" href="{% url 'table' %}">Столы</a>
+            <a href="{% url 'read' %}">Заказы</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="page-title">
+            <h1>Выберите стол</h1>
+            <p>Свободных: {{ count }}</p>
+        </div>
+
+        <div class="tables">
+            {% for t in tables %}
+                {% if t.status == "free" %}
+                <a class="table-card" href="{% url 'create' t.id %}">
+                    <div class="table-name">Стол {{ t.number }}</div>
+                    <div class="table-status">{{ t.get_status_display }}</div>
+                </a>
+                {% else %}
+                <div class="table-card table-busy">
+                    <div class="table-name">Стол {{ t.number }}</div>
+                    <div class="table-status">{{ t.get_status_display }}</div>
+                </div>
+                {% endif %}
+            {% empty %}
+            <div class="empty">Столов пока нет</div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

@@ -82,7 +82,7 @@ load_dotenv()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_rest',
+        'NAME': 'django_menyu',
         'USER': 'salim',
         'PASSWORD': os.getenv("PASSWORD_DB"),
         'HOST': 'localhost',
